@@ -2,7 +2,7 @@
 #define SENSOR 27
 #define BOMBA 32
 AdafruitIO_Feed *MotorTCC = io.feed("MotorTCC");
-AdafruitIO_Feed *totalMilliLitres = io.feed("Quantidade");
+AdafruitIO_Feed *Quantidade = io.feed("Quantidade");
 long currentMillis = 0;
 long previousMillis = 0;
 int interval = 1000;
@@ -33,7 +33,7 @@ void setup() {
   pulseCount = 0;
   flowRate = 0.0;
   flowMilliLitres = 0;
-  totalMilliLitres = 0;
+  Quantidade = 0;
   previousMillis = 0;
   attachInterrupt(digitalPinToInterrupt(SENSOR), pulseCounter, FALLING);
 
@@ -49,15 +49,15 @@ void loop() {
     flowRate = ((1000.0 / (millis() - previousMillis)) * pulse1Sec) / calibrationFactor;
     previousMillis = millis();
     flowMilliLitres = (flowRate / 60) * 100;
-    totalMilliLitres += flowMilliLitres;
+    Quantidade += flowMilliLitres;
     Serial.print("Fluxo de Vazão: ");
     Serial.print(int(flowRate));  
     Serial.print("L/min");
     Serial.print("\t");       
     Serial.print("Quantidade de Liquido entrando: ");
-    Serial.print(totalMilliLitres);
+    Serial.print(Quantidade);
     Serial.print("mL / ");
-    Serial.print(totalMilliLitres / 1000);
+    Serial.print(Quantidade / 1000);
     Serial.println("L");
   }
 
